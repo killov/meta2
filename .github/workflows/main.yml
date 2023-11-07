@@ -15,4 +15,5 @@ jobs:
       with:
         php_version: "7.4"
         version: "8"
+        configuration: "phpunit.xml"
     # ... then your own project steps ...
