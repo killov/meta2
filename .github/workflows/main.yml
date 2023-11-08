@@ -12,4 +12,4 @@ jobs:
       with:
         php_version: "7.4"
     - name: Tests
-      run: vendor/bin/phpunit tests
+      run: vendor/bin/phpunit test
