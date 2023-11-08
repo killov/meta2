@@ -238,7 +238,8 @@ class ProtocGenPhp
 		$class = $file->addClass($className);
 		$ns = $class->getNamespace();
 
-		$ns->addUse("Skrz\\Meta\\Protobuf\\ProtobufField", null, $protobufFieldAlias);
+		$ns->addUse("Skrz\\Meta\\Protobuf\\ProtobufField", null);
+		$protobufFieldAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Protobuf\\ProtobufField");
 
 		if (($info = $this->getSourceCodeInfo($className)) && $info->getLeadingComments()) {
 			$class->addComment(trim($info->getLeadingComments()));
@@ -311,13 +312,15 @@ class ProtocGenPhp
 				case FieldDescriptorProto\TypeEnum::TYPE_MESSAGE:
 					$wireType = WireTypeEnum::STRING;
 					$fieldClassName = $this->convertPackageToNamespace($field->getTypeName());
-					$ns->addUse($fieldClassName, null, $phpType);
+					$ns->addUse($fieldClassName, null);
+		$phpType = \Nette\PhpGenerator\Helpers::extractShortName($fieldClassName);
 					break;
 
 				case FieldDescriptorProto\TypeEnum::TYPE_ENUM:
 					$wireType = WireTypeEnum::VARINT;
 					$fieldClassName = $this->convertPackageToNamespace($field->getTypeName() . "Enum");
-					$ns->addUse($fieldClassName, null, $see);
+					$ns->addUse($fieldClassName, null);
+		$see = \Nette\PhpGenerator\Helpers::extractShortName($fieldClassName);
 					$phpType = "int";
 					break;
 

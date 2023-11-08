@@ -131,7 +131,8 @@ foreach ($classes as $className => $discoveryClassName) {
 	$ns = $class->getNamespace();
 
 	if ($className === "ReflectionClass") {
-		$ns->addUse("Skrz\\Meta\\Reflection\\ObjectType", null, $mixedTypeAlias);
+		$ns->addUse("Skrz\\Meta\\Reflection\\ObjectType", null);
+		$mixedTypeAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Reflection\\ObjectType");
 		$class->addExtend("Skrz\\Meta\\Reflection\\ObjectType");
 	}
 
@@ -153,7 +154,8 @@ foreach ($classes as $className => $discoveryClassName) {
 	$fromReflection
 		->setStatic(true);
 
-	$ns->addUse($className, null, $alias);
+	$ns->addUse($className, null);
+		$alias = \Nette\PhpGenerator\Helpers::extractShortName($className);
 	$fromReflection->addParameter("reflection")
 		->setTypeHint($alias)
 		->setDefaultValue(null)
@@ -170,10 +172,12 @@ foreach ($classes as $className => $discoveryClassName) {
 		->addBody("if (isset(\$stack[\$stackExpression])) {\n\treturn \$stack[\$stackExpression];\n}\n")
 		->addBody("\$stack[\$stackExpression] = \$instance = new {$class->getName()}(\$reflection);\n");
 
-	$ns->addUse("Doctrine\\Common\\Annotations\\AnnotationReader", null, $annotationReaderAlias);
+	$ns->addUse("Doctrine\\Common\\Annotations\\AnnotationReader", null);
+		$annotationReaderAlias = \Nette\PhpGenerator\Helpers::extractShortName("Doctrine\\Common\\Annotations\\AnnotationReader");
 	$fromReflection->addBody("if (func_num_args() > 2) {\n\t\$reader = func_get_arg(2);\n} else {\n\t\$reader = new {$annotationReaderAlias}();\n}\n");
 
-	$ns->addUse("Doctrine\\Common\\Annotations\\PhpParser", null, $phpParserAlias);
+	$ns->addUse("Doctrine\\Common\\Annotations\\PhpParser", null);
+		$phpParserAlias = \Nette\PhpGenerator\Helpers::extractShortName("Doctrine\\Common\\Annotations\\PhpParser");
 	$fromReflection->addBody("if (func_num_args() > 3) {\n\t\$phpParser = func_get_arg(3);\n} else {\n\t\$phpParser = new {$phpParserAlias}();\n}\n");
 
 	$endOfFromReflection = new \Nette\PhpGenerator\Method();
@@ -206,7 +210,8 @@ foreach ($classes as $className => $discoveryClassName) {
 			$objectType = false;
 			if ($returnType === "object") {
 				if (isset($classes[get_class($returnValue)])) {
-					$ns->addUse($classes[get_class($returnValue)], null, $alias);
+					$ns->addUse($classes[get_class($returnValue)], null);
+		$alias = \Nette\PhpGenerator\Helpers::extractShortName($classes[get_class($returnValue)]);
 					$returnType = $alias;
 					$objectType = true;
 				} else {
@@ -428,7 +433,8 @@ foreach ($classes as $className => $discoveryClassName) {
 			->addBody("return \$this;");
 
 		$getPropertyMethod = $class->addMethod("getProperty");
-		$ns->addUse("Skrz\\Meta\\Reflection\\Property", null, $propertyAlias);
+		$ns->addUse("Skrz\\Meta\\Reflection\\Property", null);
+		$propertyAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Reflection\\Property");
 		$getPropertyMethod
 			->addComment("@param string \$propertyName")
 			->addComment("@return {$propertyAlias}");
@@ -443,7 +449,8 @@ foreach ($classes as $className => $discoveryClassName) {
 			->addBody("return null;");
 
 		$getMethodMethod = $class->addMethod("getMethod");
-		$ns->addUse("Skrz\\Meta\\Reflection\\Method", null, $methodAlias);
+		$ns->addUse("Skrz\\Meta\\Reflection\\Method", null);
+		$methodAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Reflection\\Method");
 		$getMethodMethod
 			->addComment("@param string \$methodName")
 			->addComment("@return {$methodAlias}");
@@ -461,7 +468,8 @@ foreach ($classes as $className => $discoveryClassName) {
 	$fromReflection->addBody($endOfFromReflection->getBody());
 
 	if ($className === "ReflectionMethod") {
-		$ns->addUse("Skrz\\Meta\\Reflection\\Parameter", null, $parameterAlias);
+		$ns->addUse("Skrz\\Meta\\Reflection\\Parameter", null);
+		$parameterAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Reflection\\Parameter");
 		$getParameterMethod = $class->addMethod("getParameter");
 		$getParameterMethod
 			->addComment("@param string|int \$parameterName")
@@ -507,7 +515,8 @@ foreach ($classes as $className => $discoveryClassName) {
 	}
 
 	if (in_array($className, array("ReflectionProperty", "ReflectionMethod", "ReflectionParameter"))) {
-		$ns->addUse("Skrz\\Meta\\Reflection\\MixedType", null, $mixedTypeAlias);
+		$ns->addUse("Skrz\\Meta\\Reflection\\MixedType", null);
+		$mixedTypeAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Reflection\\MixedType");
 
 		$class
 			->addProperty("type")
@@ -543,14 +552,16 @@ foreach ($classes as $className => $discoveryClassName) {
 				->addBody("if (preg_match(" . var_export($returnRegex, true) . " . preg_quote(\$instance->name) . '/', \$instance->declaringFunction->getDocComment(), \$m)) {\n\t\$typeString = \$m[1];\n}");
 		}
 
-		$ns->addUse("Skrz\\Meta\\Reflection\\VoidType", null, $voidTypeAlias);
+		$ns->addUse("Skrz\\Meta\\Reflection\\VoidType", null);
+		$voidTypeAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Reflection\\VoidType");
 
 		$fromReflection
 			->addBody("if (isset(\$typeString)) {")
 			->addBody("\t\$instance->type = {$mixedTypeAlias}::fromString(\$typeString, \$stack, \$reader, \$phpParser, \$instance->declaringClass);");
 
 		if ($className === "ReflectionParameter") {
-			$ns->addUse("Skrz\\Meta\\Reflection\\Type", null, $typeAlias);
+			$ns->addUse("Skrz\\Meta\\Reflection\\Type", null);
+		$typeAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Reflection\\Type");
 
 			$fromReflection
 				->addBody("} elseif (\$reflection->getClass()) {")

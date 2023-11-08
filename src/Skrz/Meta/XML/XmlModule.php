@@ -114,7 +114,8 @@ class XmlModule extends AbstractModule
 		$ns = $class->getNamespace();
 
 		$ns->addUse("Skrz\\Meta\\XML\\XmlMetaInterface");
-		$ns->addUse($type->getName(), null, $typeAlias);
+		$ns->addUse($type->getName(), null);
+		$typeAlias = \Nette\PhpGenerator\Helpers::extractShortName($type->getName());
 		$class->addImplement("Skrz\\Meta\\XML\\XmlMetaInterface");
 
 		$groups = array();
@@ -329,7 +330,8 @@ class XmlModule extends AbstractModule
 
 				if ($propertyType instanceof Type) {
 					$propertyTypeMetaClassName = $spec->createMetaClassName($propertyType);
-					$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+					$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 					$elementsByName[$name] .=
 						"\t\$value = {$propertyTypeMetaClassNameAlias}::fromXml(\$xml, \$group" .
 						($isArray ? "" : ", isset(\$object->{$property->getName()}) ? \$object->{$property->getName()} : null") .
@@ -545,7 +547,8 @@ class XmlModule extends AbstractModule
 
 				if ($propertyType instanceof Type) {
 					$propertyTypeMetaClassName = $spec->createMetaClassName($propertyType);
-					$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+					$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 					$elementsByName[$name] .=
 						"\t\$value = {$propertyTypeMetaClassNameAlias}::fromXml(\$node, \$group" .
 						($isArray ? "" : ", isset(\$object->{$property->getName()}) ? \$object->{$property->getName()} : null") .
@@ -634,7 +637,8 @@ class XmlModule extends AbstractModule
 			->addComment("")
 			->addComment("@return \\DOMElement|void");
 
-		$ns->addUse("Skrz\\Meta\\Stack", null, $stackAlias);
+		$ns->addUse("Skrz\\Meta\\Stack", null);
+		$stackAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Stack");
 
 		$toXml
 			->addBody("if (\$object === null) {")
@@ -890,7 +894,8 @@ class XmlModule extends AbstractModule
 
 				} elseif ($baseType instanceof Type) {
 					$propertyTypeMetaClassName = $spec->createMetaClassName($baseType);
-					$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+					$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 					$toXmlWriter->addBody(
 						"{$indent}{$propertyTypeMetaClassNameAlias}::toXml({$value}, " .
 						"\$group, " .
@@ -994,7 +999,8 @@ class XmlModule extends AbstractModule
 
 						} elseif ($baseType instanceof Type) {
 							$propertyTypeMetaClassName = $spec->createMetaClassName($baseType);
-							$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+							$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 							$toXmlWriter->addBody(
 								"{$indent}{$propertyTypeMetaClassNameAlias}::toXml({$value}, " .
 								"\$group, " .
@@ -1240,7 +1246,8 @@ class XmlModule extends AbstractModule
 
 				} elseif ($baseType instanceof Type) {
 					$propertyTypeMetaClassName = $spec->createMetaClassName($baseType);
-					$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+					$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 					$toXmlElement->addBody(
 						"{$indent}{$propertyTypeMetaClassNameAlias}::toXml({$value}, " .
 						"\$group, " .
@@ -1345,7 +1352,8 @@ class XmlModule extends AbstractModule
 
 						} elseif ($baseType instanceof Type) {
 							$propertyTypeMetaClassName = $spec->createMetaClassName($baseType);
-							$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+							$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 							$toXmlElement->addBody(
 								"{$indent}{$propertyTypeMetaClassNameAlias}::toXml({$value}, " .
 								"\$group, " .

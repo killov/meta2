@@ -26,7 +26,8 @@ class BaseModule extends AbstractModule
 		$namespace = $class->getNamespace();
 
 		// extend base class
-		$namespace->addUse($type->getName(), null, $typeAlias);
+		$namespace->addUse($type->getName(), null);
+		$typeAlias = \Nette\PhpGenerator\Helpers::extractShortName($type->getName());
 		$class->addExtend($type->getName());
 
 		$class
@@ -57,7 +58,8 @@ class BaseModule extends AbstractModule
 		}
 
 		// implement base interface
-		$namespace->addUse("Skrz\\Meta\\MetaInterface", null, $metaInterfaceAlias);
+		$namespace->addUse("Skrz\\Meta\\MetaInterface", null);
+		$metaInterfaceAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\MetaInterface");
 		$class->addImplement("Skrz\\Meta\\MetaInterface");
 
 		// getInstance() method
@@ -209,7 +211,8 @@ class BaseModule extends AbstractModule
 					$hash->addBody("{$indent}hash_update(\$ctx, {$objectPath} instanceof \\DateTimeInterface ? {$objectPath}->format(\\DateTime::ISO8601) : '');");
 				} else {
 					$propertyTypeMetaClassName = $spec->createMetaClassName($baseType);
-					$namespace->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+					$namespace->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 					$hash->addBody("{$indent}{$propertyTypeMetaClassNameAlias}::hash({$objectPath}, \$ctx);");
 				}
 

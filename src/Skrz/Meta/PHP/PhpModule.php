@@ -102,8 +102,10 @@ class PhpModule extends AbstractModule
 		$ns = $class->getNamespace();
 
 		$ns->addUse("Skrz\\Meta\\PHP\\PhpMetaInterface");
-		$ns->addUse($type->getName(), null, $typeAlias);
-		$ns->addUse("Skrz\\Meta\\Stack", null, $stackAlias);
+		$ns->addUse($type->getName(), null);
+		$typeAlias = \Nette\PhpGenerator\Helpers::extractShortName($type->getName());
+		$ns->addUse("Skrz\\Meta\\Stack", null);
+		$stackAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Stack");
 		$class->addImplement("Skrz\\Meta\\PHP\\PhpMetaInterface");
 
 		// get groups
@@ -169,7 +171,8 @@ class PhpModule extends AbstractModule
 		$inputOutputClasses = array_keys($inputOutputClasses);
 		sort($inputOutputClasses);
 		foreach ($inputOutputClasses as $inputOutputClass) {
-			$ns->addUse($inputOutputClass, null, $alias);
+			$ns->addUse($inputOutputClass, null);
+		$alias = \Nette\PhpGenerator\Helpers::extractShortName($inputOutputClass);
 			$inputOutputTypeHint[] = $alias;
 		}
 		$inputOutputTypeHint = implode("|", $inputOutputTypeHint);
@@ -212,7 +215,8 @@ class PhpModule extends AbstractModule
 						$groupDiscriminatorOffset = $discriminatorOffsetMap[$groupId];
 
 						foreach ($groupDiscriminatorMetaMap as $value => $metaClass) {
-							$ns->addUse($metaClass, null, $alias);
+							$ns->addUse($metaClass, null);
+		$alias = \Nette\PhpGenerator\Helpers::extractShortName($metaClass);
 							$from
 								->addBody(
 									"if ((\$id & {$groupId}) > 0 && " .
@@ -225,7 +229,8 @@ class PhpModule extends AbstractModule
 						}
 					} else {
 						foreach ($groupDiscriminatorMetaMap as $value => $metaClass) {
-							$ns->addUse($metaClass, null, $alias);
+							$ns->addUse($metaClass, null);
+		$alias = \Nette\PhpGenerator\Helpers::extractShortName($metaClass);
 							$from
 								->addBody(
 									"if ((\$id & {$groupId}) > 0 && " .
@@ -293,7 +298,8 @@ class PhpModule extends AbstractModule
 
 					} elseif ($baseType instanceof Type) {
 						$propertyTypeMetaClassName = $spec->createMetaClassName($baseType);
-						$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+						$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 						$from->addBody(
 							"{$indent}{$objectPath} = {$propertyTypeMetaClassNameAlias}::from{$what}(" .
 							"{$arrayPath}, " .
@@ -362,8 +368,10 @@ class PhpModule extends AbstractModule
 
 					foreach ($groupDiscriminatorClassMap as $value => $className) {
 						$metaClassName = $discriminatorMetaMap[$groupId][$value];
-						$ns->addUse($className, null, $alias);
-						$ns->addUse($metaClassName, null, $metaAlias);
+						$ns->addUse($className, null);
+		$alias = \Nette\PhpGenerator\Helpers::extractShortName($className);
+						$ns->addUse($metaClassName, null);
+		$metaAlias = \Nette\PhpGenerator\Helpers::extractShortName($metaClassName);
 
 						$to
 							->addBody("if ((\$id & {$groupId}) > 0 && \$object instanceof {$alias}) {")
@@ -469,7 +477,8 @@ class PhpModule extends AbstractModule
 
 					} elseif ($baseType instanceof Type) {
 						$propertyTypeMetaClassName = $spec->createMetaClassName($baseType);
-						$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+						$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 						$to->addBody(
 							"{$indent}{$arrayPath} = {$propertyTypeMetaClassNameAlias}::to{$what}(" .
 							"{$objectPath}, " .

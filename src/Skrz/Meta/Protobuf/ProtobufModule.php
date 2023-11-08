@@ -120,9 +120,12 @@ class ProtobufModule extends AbstractModule
 		$ns = $class->getNamespace();
 
 		$ns->addUse("Skrz\\Meta\\Protobuf\\ProtobufMetaInterface");
-		$ns->addUse($type->getName(), null, $typeAlias);
-		$ns->addUse("Skrz\\Meta\\Protobuf\\Binary", null, $binary);
-		$ns->addUse("Skrz\\Meta\\Protobuf\\ProtobufException", null, $protobufExceptionAlias);
+		$ns->addUse($type->getName(), null);
+		$typeAlias = \Nette\PhpGenerator\Helpers::extractShortName($type->getName());
+		$ns->addUse("Skrz\\Meta\\Protobuf\\Binary", null);
+		$binary = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Protobuf\\Binary");
+		$ns->addUse("Skrz\\Meta\\Protobuf\\ProtobufException", null);
+		$protobufExceptionAlias = \Nette\PhpGenerator\Helpers::extractShortName("Skrz\\Meta\\Protobuf\\ProtobufException");
 
 		$class->addImplement("Skrz\\Meta\\Protobuf\\ProtobufMetaInterface");
 
@@ -298,7 +301,8 @@ class ProtobufModule extends AbstractModule
 
 					} elseif ($baseType instanceof Type) {
 						$propertyTypeMetaClassName = $spec->createMetaClassName($baseType);
-						$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+						$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 						$fromProtobuf->addBody("{$indent}{$propertyLhs} = {$propertyTypeMetaClassNameAlias}::fromProtobuf(\$input, null, \$start, \$start + \$length);");
 
 					} else {
@@ -446,7 +450,8 @@ class ProtobufModule extends AbstractModule
 						$toProtobuf->addBody("{$indent}{$output} .= {$var};");
 					} elseif ($baseType instanceof Type) {
 						$propertyTypeMetaClassName = $spec->createMetaClassName($baseType);
-						$ns->addUse($propertyTypeMetaClassName, null, $propertyTypeMetaClassNameAlias);
+						$ns->addUse($propertyTypeMetaClassName, null);
+		$propertyTypeMetaClassNameAlias = \Nette\PhpGenerator\Helpers::extractShortName($propertyTypeMetaClassName);
 						$toProtobuf->addBody("{$indent}\$buffer = {$propertyTypeMetaClassNameAlias}::toProtobuf({$var}, \$filter === null ? null : \$filter[" . var_export($property->getName(), true) . "]);");
 						$toProtobuf->addBody("{$indent}{$output} .= {$binary}::encodeVarint(strlen(\$buffer));");
 						$toProtobuf->addBody("{$indent}{$output} .= \$buffer;");

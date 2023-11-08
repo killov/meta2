@@ -115,13 +115,15 @@ class JsonModule extends AbstractModule
 		sort($inputOutputClasses);
 		$inputOutputTypeHint = array();
 		foreach ($inputOutputClasses as $className) {
-			$ns->addUse($className, null, $alias);
+			$ns->addUse($className, null);
+		$alias = \Nette\PhpGenerator\Helpers::extractShortName($className);
 			$inputOutputTypeHint[] = $alias;
 		}
 		$inputOutputTypeHint = implode("|", $inputOutputTypeHint);
 
 		$ns->addUse("Skrz\\Meta\\JSON\\JsonMetaInterface");
-		$ns->addUse($type->getName(), null, $typeAlias);
+		$ns->addUse($type->getName(), null);
+		$typeAlias = \Nette\PhpGenerator\Helpers::extractShortName($type->getName());
 		$class->addImplement("Skrz\\Meta\\JSON\\JsonMetaInterface");
 
 		// fromJson()
