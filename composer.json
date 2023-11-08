@@ -28,11 +28,7 @@
       "Google\\": [
         "gen-src/Google/"
       ],
-      "Skrz\\Meta\\": [
-        "gen-src/Skrz/Meta/",
-        "src/Skrz/Meta/",
-        "test/Skrz/Meta/"
-      ]
+      "Skrz\\Meta\\": "src/Skrz/Meta/"
     },
     "files": [
       "src/annotations.php"
