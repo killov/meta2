@@ -1,5 +1,5 @@
 {
-  "name": "skrz/meta",
+  "name": "killov/meta",
   "description": "Different wire formats, different data sources, single object model",
   "minimum-stability": "stable",
   "license": "MIT",
@@ -7,6 +7,10 @@
     {
       "name": "Jakub Kulhan",
       "email": "jakub.kulhan@gmail.com"
+    },
+    {
+      "name": "Zdeněk Mazurák",
+      "email": "z.mazurak@seznam.cz"
     }
   ],
   "require": {
