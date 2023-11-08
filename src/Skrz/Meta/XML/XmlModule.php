@@ -621,7 +621,7 @@ class XmlModule extends AbstractModule
 		$toXml->setStatic(true);
 		$toXml->addParameter("object");
 		$toXml->addParameter("group")->setOptional(true);
-		$toXml->addParameter("filterOrXml");
+		$toXml->addParameter("filterOrXml")->setOptional(true)->setDefaultValue([]);
 		$toXml->addParameter("xml")->setOptional(true);
 		$toXml->addParameter("el")->setOptional(true);
 		$toXml
