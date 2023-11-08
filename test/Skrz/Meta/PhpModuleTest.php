@@ -1,6 +1,7 @@
 <?php
 namespace Skrz\Meta;
 
+use PHPUnit\Framework\TestCase;
 use Skrz\Meta\Fields\Fields;
 use Skrz\Meta\Fixtures\PHP\ArrayCollection;
 use Skrz\Meta\Fixtures\PHP\ClassWithArrayProperty;
@@ -31,7 +32,7 @@ use Skrz\Meta\Fixtures\PHP\Meta\ClassWithRecursivePropertyMeta;
 use Skrz\Meta\Fixtures\PHP\PhpMetaSpec;
 use Symfony\Component\Finder\Finder;
 
-class PhpModuleTest extends \PHPUnit_Framework_TestCase
+class PhpModuleTest extends TestCase
 {
 
 	public static function setUpBeforeClass()
